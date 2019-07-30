@@ -1,0 +1,13 @@
+Project: TutBack
+
+Values:
+  port: 4000
+
+install: |
+  pip install -r requirements.txt
+
+start: |
+  FLASK_APP=app.py flask run --port ${Oya[port]}
+
+test: |
+  echo "OK"
