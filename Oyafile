@@ -1,13 +1,30 @@
 Project: TutBack
 
+Require:
+  github.com/tooploox/oya-packs/docker: v0.0.7
+
+Import:
+  docker: github.com/tooploox/oya-packs/docker
+
 Values:
   port: 4000
+  host: 0.0.0.0
+  docker:
+    image: 'tut-back'
 
 install: |
   pip install -r requirements.txt
 
-start: |
-  FLASK_APP=app.py flask run --port ${Oya[port]}
-
 test: |
   echo "OK"
+
+start: |
+  FLASK_APP=app.py flask run --port ${Oya[port]} --host ${Oya[host]}
+
+onPush: |
+  oya run install
+  oya run test
+
+onMergeToMaster: |
+  oya run install
+  # oya run deploy
