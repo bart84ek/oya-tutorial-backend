@@ -8,7 +8,6 @@ Import:
 
 Values:
   port: 4000
-  host: 0.0.0.0
   docker:
     image: 'tut-back'
 
@@ -19,7 +18,8 @@ test: |
   echo "OK"
 
 start: |
-  FLASK_APP=app.py flask run --port ${Oya[port]} --host ${Oya[host]}
+  port=${PORT:-${Oya[port]}}
+  FLASK_APP=app.py flask run --port $port --host 0.0.0.0
 
 onPush: |
   oya run install
